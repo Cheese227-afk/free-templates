@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starter Pages – customize and download website templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9eef5;--panel:#fff;--ink:#12203a;--muted:#5a6780;--line:#cdd6e4;--signal:#ffb400;--r:10px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;margin:0;line-height:1.05}
+header{padding:3rem 5vw 1.5rem;max-width:1200px;margin:0 auto}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;max-width:14ch;letter-spacing:-.02em}
+header p{max-width:52ch;color:var(--muted);margin:1rem 0 0;font-size:1.1rem}
+main{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;max-width:1200px;margin:0 auto;padding:1rem 5vw 4rem}
+.list{display:flex;flex-direction:column;gap:.6rem}
+.list button{all:unset;cursor:pointer;background:var(--panel);border:2px solid transparent;border-radius:var(--r);padding:.9rem 1rem}
+.list button:hover{border-color:var(--line)}
+.list button:focus-visible,.ctl input:focus-visible,.ctl select:focus-visible,.dl:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.list button[aria-pressed="true"]{border-color:var(--ink);box-shadow:5px 5px 0 var(--signal)}
+.list b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.15rem}
+.list span{color:var(--muted);font-size:.9rem}
+.stage{background:var(--panel);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.bar{display:flex;flex-wrap:wrap;gap:1rem;align-items:end;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}
+.ctl{display:flex;flex-direction:column;gap:.25rem;font-size:.85rem;color:var(--muted);font-weight:500}
+.ctl input[type=text],.ctl select{font:inherit;color:var(--ink);padding:.5rem .6rem;border:1px solid var(--line);border-radius:6px;background:#fff;min-width:150px}
+.ctl input[type=color]{width:56px;height:38px;padding:2px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.dl{margin-left:auto;font:700 1rem "DM Sans",sans-serif;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:.75rem 1.4rem;cursor:pointer}
+.dl:hover{background:#243a64}
+.frame{background:#dfe5ef;padding:1rem}
+iframe{display:block;width:100%;height:560px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.note{padding:.9rem 1.2rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media(max-width:820px){main{grid-template-columns:1fr}.list{flex-direction:row;overflow-x:auto}.list button{min-width:200px}.dl{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Pick a page. Make it yours. Download it.</h1>
+  <p>Each template is a single HTML file with no dependencies. Change the name, tagline, color and font, check the live preview, then download the file and upload it to your site.</p>
+</header>
+
+<main>
+  <div class="list" id="list" role="group" aria-label="Templates"></div>
+  <section class="stage" aria-label="Customize and preview">
+    <div class="bar">
+      <label class="ctl">Site name<input type="text" id="name" value="Juniper Studio" maxlength="40"></label>
+      <label class="ctl">Tagline<input type="text" id="tag" value="Thoughtful websites for small businesses" maxlength="80"></label>
+      <label class="ctl">Accent color<input type="color" id="accent" value="#e5484d"></label>
+      <label class="ctl">Font style<select id="font"><option>Sans</option><option>Serif</option><option>Mono</option></select></label>
+      <button class="dl" id="dl" type="button">Download HTML</button>
+    </div>
+    <div class="frame"><iframe id="view" title="Template preview"></iframe></div>
+    <div class="note" id="note"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var FONTS={Sans:"'Helvetica Neue',Arial,sans-serif",Serif:"Georgia,'Times New Roman',serif",Mono:"ui-monospace,Menlo,Consolas,monospace"};
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function ink(hex){var n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>150?"#111":"#fff"}
+
+  function page(s,css,body){
+    var A=s.accent,T=ink(A);
+    return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>'+esc(s.name)+'</title>\n<style>\n'+
+    '*{box-sizing:border-box}body{margin:0;font-family:'+FONTS[s.font]+';color:#1b1f2a;line-height:1.6}'+
+    'a{color:inherit}nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 5vw}nav b{font-size:1.2rem}nav a{margin-left:1.2rem;text-decoration:none}'+
+    'section{padding:3.5rem 5vw}h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.1;margin:0 0 1rem}h2{margin:0 0 1rem}'+
+    '.btn{display:inline-block;background:'+A+';color:'+T+';padding:.75em 1.4em;border-radius:6px;text-decoration:none;font-weight:700}'+
+    '.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem}'+
+    '.card{border:1px solid #0002;border-radius:8px;padding:1.4rem}.tint{background:'+A+'22}'+
+    'footer{padding:2rem 5vw;border-top:1px solid #0002;font-size:.9rem;opacity:.7}'+css+
+    '\n</style>\n</head>\n<body>\n'+body+'\n</body>\n</html>\n';
+  }
+  function nav(s,links){return '<nav><b>'+esc(s.name)+'</b><div>'+links.map(function(l){return '<a href="#'+l.toLowerCase()+'">'+l+'</a>'}).join('')+'</div></nav>'}
+  function foot(s){return '<footer>© '+new Date().getFullYear()+' '+esc(s.name)+'. All rights reserved.</footer>'}
+
+  var T=[
+    {id:"landing",title:"Business landing page",desc:"Hero, three features, call to action",
+     note:"Sections are anchored (#features, #contact) so the nav works without JavaScript.",
+     build:function(s){var n=esc(s.name);return page(s,'.hero{padding:5rem 5vw}.hero p{max-width:50ch;font-size:1.2rem}.cta{text-align:center}',
+      nav(s,["Features","Contact"])+'\n<section class="hero tint"><h1>'+esc(s.tag)+'</h1><p>Tell visitors in one sentence what you do and who it is for.</p><a class="btn" href="#contact">Get in touch</a></section>\n'+
+      '<section id="features"><h2>What you get</h2><div class="grid"><div class="card"><h3>Fast to start</h3><p>Describe the first benefit here.</p></div><div class="card"><h3>Easy to trust</h3><p>Describe the second benefit here.</p></div><div class="card"><h3>Built to last</h3><p>Describe the third benefit here.</p></div></div></section>\n'+
+      '<section id="contact" class="cta"><h2>Ready when you are</h2><p>Email hello@example.com or book a call.</p><a class="btn" href="mailto:hello@example.com">Email '+n+'</a></section>\n'+foot(s))}},
+    {id:"portfolio",title:"Portfolio",desc:"Intro, project grid, contact",
+     note:"Swap each .work block for an <img> to show your own project images.",
+     build:function(s){return page(s,'.work{aspect-ratio:4/3;border-radius:8px;background:'+s.accent+'33;display:flex;align-items:end;padding:1rem;font-weight:700}.work:nth-child(even){background:'+s.accent+'66}',
+      nav(s,["Work","Contact"])+'\n<section><h1>'+esc(s.name)+'</h1><p style="font-size:1.2rem;max-width:48ch">'+esc(s.tag)+'</p></section>\n'+
+      '<section id="work"><h2>Selected work</h2><div class="grid"><div class="work">Project one</div><div class="work">Project two</div><div class="work">Project three</div><div class="work">Project four</div></div></section>\n'+
+      '<section id="contact"><h2>Work with me</h2><p>I take on a few projects each quarter.</p><a class="btn" href="mailto:hello@example.com">Say hello</a></section>\n'+foot(s))}},
+    {id:"blog",title:"Blog",desc:"Header and a list of recent posts",
+     note:"Duplicate an <article> for each new post.",
+     build:function(s){return page(s,'article{padding:1.5rem 0;border-bottom:1px solid #0002;max-width:680px}article h2 a{text-decoration:none}article time{font-size:.85rem;opacity:.6}.head{background:'+s.accent+';color:'+ink(s.accent)+'}',
+      '<section class="head"><h1>'+esc(s.name)+'</h1><p style="margin:0;max-width:50ch">'+esc(s.tag)+'</p></section>\n<section><h2>Latest posts</h2>\n'+
+      ["First post title","Second post title","Third post title"].map(function(t,i){return '<article><time>Jan '+(i+3)+', '+new Date().getFullYear()+'</time><h2><a href="#">'+t+'</a></h2><p>A short summary of the post goes here so readers know what to expect.</p></article>'}).join('\n')+
+      '\n</section>\n'+foot(s))}},
+    {id:"menu",title:"Restaurant menu",desc:"Hero, menu with prices, opening hours",
+     note:"Edit the prices and dishes directly in the <ul class=\"menu\"> list.",
+     build:function(s){return page(s,'.menu{list-style:none;padding:0;max-width:620px}.menu li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px dashed #0004}.menu em{display:block;font-size:.9rem;opacity:.65;font-style:normal}.hero{padding:5rem 5vw;background:'+s.accent+';color:'+ink(s.accent)+'}',
+      '<section class="hero"><h1>'+esc(s.name)+'</h1><p style="max-width:44ch;font-size:1.2rem;margin:0">'+esc(s.tag)+'</p></section>\n<section><h2>Menu</h2><ul class="menu">'+
+      [["House soup","Seasonal vegetables","7"],["Grilled chicken","Herb butter, greens","16"],["Mushroom pasta","Cream, parmesan","14"],["Chocolate tart","Salted caramel","8"]].map(function(m){return '<li><span><b>'+m[0]+'</b><em>'+m[1]+'</em></span><b>$'+m[2]+'</b></li>'}).join('')+
+      '</ul></section>\n<section><h2>Opening hours</h2><p>Tuesday to Sunday, 11:00 to 22:00<br>Closed Mondays</p></section>\n'+foot(s))}}
+  ];
+
+  var cur=T[0],$=function(i){return document.getElementById(i)};
+  function state(){return {name:$("name").value||"Your site",tag:$("tag").value,accent:$("accent").value,font:$("font").value}}
+  function render(){$("view").srcdoc=cur.build(state());$("note").textContent="Tip: "+cur.note}
+  function pick(t){cur=t;[].forEach.call($("list").children,function(b){b.setAttribute("aria-pressed",b.dataset.id===t.id)});render()}
+
+  T.forEach(function(t){
+    var b=document.createElement("button");b.type="button";b.dataset.id=t.id;b.setAttribute("aria-pressed",t===cur);
+    b.innerHTML="<b>"+t.title+"</b><span>"+t.desc+"</span>";b.onclick=function(){pick(t)};$("list").appendChild(b);
+  });
+  ["name","tag","accent","font"].forEach(function(i){$(i).addEventListener("input",render)});
+  $("dl").onclick=function(){
+    var s=state(),slug=s.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"site";
+    var url=URL.createObjectURL(new Blob([cur.build(s)],{type:"text/html"}));
+    var a=document.createElement("a");a.href=url;a.download=slug+"-"+cur.id+".html";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url)},1000);
+  };
+  render();
+})();
+</script>
+</body>
+</html>
