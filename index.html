@@ -14,12 +14,15 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 "DM Sans",system-ui,sans-serif}
 h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;margin:0;line-height:1.05}
-header{padding:3rem 5vw 1rem;max-width:1200px;margin:0 auto}
+.topnav{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;padding:1rem 5vw 0}
+.topnav a{color:var(--ink);text-decoration:none;font-weight:500}
+.topnav a:hover{text-decoration:underline}
+.topnav .logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.2rem}
+.topnav div a{margin-left:1.2rem}
+header{padding:2rem 5vw 1rem;max-width:1200px;margin:0 auto}
 h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;max-width:14ch;letter-spacing:-.02em}
 header p{max-width:56ch;color:var(--muted);margin:1rem 0 0;font-size:1.1rem}
-.ad{display:flex;justify-content:center;max-width:100%;overflow:hidden}
-.ad-top{margin:1rem auto}
-main{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;max-width:1200px;margin:0 auto;padding:1rem 5vw 4rem}
+main{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;max-width:1200px;margin:0 auto;padding:1rem 5vw 3rem}
 .side{display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
 .list{display:flex;flex-direction:column;gap:.6rem;width:100%}
 .list button{all:unset;cursor:pointer;background:var(--panel);border:2px solid transparent;border-radius:var(--r);padding:.9rem 1rem}
@@ -43,31 +46,32 @@ button:focus-visible,.ctl input:focus-visible,.ctl select:focus-visible,.up:focu
 .frame{background:#dfe5ef;padding:1rem}
 iframe{display:block;width:100%;height:600px;border:1px solid var(--line);border-radius:6px;background:#fff}
 .note{padding:.9rem 1.2rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+.content{max-width:820px;margin:0 auto;padding:1rem 5vw 3rem}
+.content section{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.8rem;margin-bottom:1.2rem}
+.content h2{font-size:1.7rem;margin-bottom:.8rem}
+.content h3{font-size:1.15rem;margin:1.2rem 0 .3rem}
+.content p,.content li{color:#2b3a57}
+.content ol,.content ul{padding-left:1.3rem}
+.content li{margin-bottom:.4rem}
+.content a{color:var(--ink)}
+footer.site{max-width:1200px;margin:0 auto;padding:1.5rem 5vw 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+footer.site a{color:var(--ink);margin-right:1.2rem}
 @media(max-width:820px){main{grid-template-columns:1fr}.list{flex-direction:row;overflow-x:auto}.list button{min-width:200px}.dl{margin-left:0;width:100%}}
 </style>
-<script data-cfasync="false" src="https://abscloud.org/1/3749ff503a42487a2ba1ac4c711f97bb"></script>
 </head>
 <body>
+<nav class="topnav" aria-label="Main">
+  <a class="logo" href="index.html">Starter Pages</a>
+  <div><a href="#how-it-works">How it works</a><a href="#faq">FAQ</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></div>
+</nav>
 <header>
   <h1>Pick a page. Make it yours. Download it.</h1>
   <p>Choose a template, add your logo and photos, set your colors, and check the live preview. You get one HTML file with everything built in, ready to upload to your site.</p>
 </header>
 
-<div class="ad ad-top">
-<script>
-if(innerWidth>=520){atOptions={'key':'d1697cc3b77bb3b5c2d82f9b7a27f66e','format':'iframe','height':60,'width':468,'params':{}};document.write('<scr'+'ipt src="https://bauval.org/22/d1697cc3b77bb3b5c2d82f9b7a27f66e"><\/scr'+'ipt>')}
-else{atOptions={'key':'6244950725f34fb61e3895186d8893e1','format':'iframe','height':50,'width':320,'params':{}};document.write('<scr'+'ipt src="https://bauval.org/22/6244950725f34fb61e3895186d8893e1"><\/scr'+'ipt>')}
-</script>
-</div>
-
 <main>
   <aside class="side">
     <div class="list" id="list" role="group" aria-label="Templates"></div>
-    <div class="ad">
-<script>
-if(innerWidth>=821){atOptions={'key':'5f25f66cb987d8defc9c4a6e7a801249','format':'iframe','height':300,'width':160,'params':{}};document.write('<scr'+'ipt src="https://bauval.org/22/5f25f66cb987d8defc9c4a6e7a801249"><\/scr'+'ipt>')}
-</script>
-    </div>
   </aside>
 
   <section class="stage" aria-label="Customize and preview">
@@ -89,6 +93,56 @@ if(innerWidth>=821){atOptions={'key':'5f25f66cb987d8defc9c4a6e7a801249','format'
     <div class="note" id="note"></div>
   </section>
 </main>
+
+<div class="content">
+  <section id="how-it-works">
+    <h2>How to use Starter Pages</h2>
+    <p>Starter Pages is a free tool for people who need a simple, good-looking website without learning to code or paying for a site builder. You choose one of four ready-made layouts, fill in your own details, and download a single HTML file that you can put on almost any web host. This short guide walks through each step.</p>
+    <ol>
+      <li><strong>Choose a template.</strong> Use the list on the left to pick a layout. The business landing page suits a service or small company, the portfolio suits designers, photographers and freelancers, the blog gives you a header and a list of recent posts, and the restaurant menu suits cafes, food stalls and caterers. Switching templates keeps everything you have already typed.</li>
+      <li><strong>Enter your details.</strong> Type your site name, a one-line tagline and a contact email. The preview updates as you type, so you can see exactly how long text will look before you commit to it.</li>
+      <li><strong>Pick colors, fonts and a theme.</strong> The accent color is used for buttons, banners and highlights, and the page automatically chooses black or white text so that it stays readable on top of it. You can also switch between a light and a dark theme and choose a sans-serif, serif or monospace font style.</li>
+      <li><strong>Add your images.</strong> Upload a logo, a hero image and up to four gallery photos. Images are resized in your browser before they are placed in the page, which keeps the final file small and quick to load.</li>
+      <li><strong>Download and publish.</strong> Press the download button to receive one HTML file. Upload it to your hosting account, or to a free static host, and rename it to <code>index.html</code> if it should be your home page. Then edit the sample text in any text editor to replace it with your real content.</li>
+    </ol>
+  </section>
+
+  <section id="why-templates">
+    <h2>Why start from an HTML template?</h2>
+    <p>A blank page is the hardest place to start. A template gives you a sensible structure, spacing and mobile layout from the first minute, so you can spend your time on what your visitors actually care about: clear words, good photos and an easy way to contact you.</p>
+    <p>A single self-contained HTML file also has real practical advantages. It has no database to maintain, no plugins to update and no login page for attackers to target. It loads quickly because the browser only needs to fetch one file, and it works on cheap or free hosting. If you later outgrow it, the code is plain HTML and CSS, so any developer can pick it up and extend it.</p>
+    <h3>Tips for a better page</h3>
+    <ul>
+      <li>Write the tagline as a promise to the visitor, not as a slogan. Say what you do and who it is for.</li>
+      <li>Use photos that you took yourself or have the right to use, and compress very large files before uploading.</li>
+      <li>Check the live preview at a narrow width as well as a wide one, because most visitors will see your page on a phone.</li>
+      <li>Replace every piece of sample text before publishing. Placeholder wording such as "Describe the first benefit here" should never go live.</li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>Frequently asked questions</h2>
+    <h3>Is Starter Pages free?</h3>
+    <p>Yes. You can customize and download as many pages as you like without creating an account.</p>
+    <h3>Are my images uploaded to your server?</h3>
+    <p>No. Your logo and photos are read and resized by your own browser and embedded in the file you download. They are not sent to our servers. See the <a href="privacy.html">privacy policy</a> for details.</p>
+    <h3>Can I use the downloaded page for a commercial website?</h3>
+    <p>Yes. The code that the tool generates is yours to use, edit and publish, including for a business site. You remain responsible for the text and images you add, so make sure you have the rights to use them.</p>
+    <h3>Will the page work on phones?</h3>
+    <p>Yes. Every template is responsive and rearranges itself on small screens.</p>
+    <h3>How do I change the text after downloading?</h3>
+    <p>Open the file in any text editor, such as Notepad or VS Code, and edit the words between the tags. Save the file and upload it again to your host.</p>
+    <h3>Why are my images embedded instead of linked?</h3>
+    <p>Embedding means the downloaded file works on its own with no extra folders. The trade-off is a larger file. If you prefer, you can later replace the embedded data with links to image files on your own host.</p>
+    <h3>How do I contact you?</h3>
+    <p>Use the <a href="contact.html">contact page</a>. We read every message and reply as soon as we can.</p>
+  </section>
+</div>
+
+<footer class="site">
+  <p><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a></p>
+  <p>© <span id="yr">2026</span> Starter Pages. All rights reserved.</p>
+</footer>
 
 <script>
 (function(){
@@ -183,9 +237,9 @@ if(innerWidth>=821){atOptions={'key':'5f25f66cb987d8defc9c4a6e7a801249','format'
     var a=document.createElement("a");a.href=url;a.download=slug+"-"+cur.id+".html";document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url)},1000);
   };
+  $("yr").textContent=new Date().getFullYear();
   ui();
 })();
 </script>
-<script data-cfasync="false" src="https://bauval.org/14/dd2b1b7b19de383a11fd8c61b05f6d39"></script>
 </body>
 </html>
